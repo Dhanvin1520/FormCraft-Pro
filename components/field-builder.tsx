@@ -13,13 +13,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowLeft, Save, Eye, Share2, Undo, Redo, Monitor, Tablet, Smartphone, Settings, Plus } from "lucide-react"
 import Link from "next/link"
 import { useFormStore } from "@/lib/store"
-import { FieldPalette } from "@/components/ui/field-palette"
+import { FieldPalette } from "@/components/field-palette"
 import { SortableField } from "@/components/sortable-field"
 import { FieldEditor } from "@/components/field-editor"
 import { FormPreview } from "@/components/form-preview"
 import { ShareDialog } from "@/components/share-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { toast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast"
 
 export function FormBuilder() {
   const { currentForm, updateForm, reorderFields, undo, redo, canUndo, canRedo, saveToHistory } = useFormStore()
@@ -49,6 +49,7 @@ export function FormBuilder() {
 
   const handleSave = () => {
     saveToHistory()
+    const { toast } = useToast()
     toast({
       title: "Form Saved",
       description: "Your form has been saved successfully.",
