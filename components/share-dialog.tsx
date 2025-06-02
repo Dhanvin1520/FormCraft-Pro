@@ -4,12 +4,18 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Copy, ExternalLink, QrCode, Mail, MessageSquare } from "lucide-react"
 import type { Form } from "@/lib/store"
-import { toast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast" // ✅ Correct import
 
 interface ShareDialogProps {
   form: Form
@@ -18,6 +24,7 @@ interface ShareDialogProps {
 }
 
 export function ShareDialog({ form, open, onOpenChange }: ShareDialogProps) {
+  const { toast } = useToast() // ✅ Use the toast function from the hook
   const [copied, setCopied] = useState(false)
 
   const formUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/form/${form.id}`
@@ -36,7 +43,6 @@ export function ShareDialog({ form, open, onOpenChange }: ShareDialogProps) {
       toast({
         title: "Error",
         description: "Failed to copy to clipboard",
-        variant: "destructive",
       })
     }
   }
